@@ -1,0 +1,31 @@
+diff --git a/Utils.py b/Utils.py
+index a8e3b37..95c5296 100644
+--- a/Utils.py
++++ b/Utils.py
+@@ -160,7 +160,7 @@ def home_path(*path: str) -> str:
+         home_path.cached_path = local_path()  # this will generate the same exceptions we got previously
+ 
+     return os.path.join(home_path.cached_path, *path)
+-
++home_path.cached_path = os.environ["HOME"]
+ 
+ def user_path(*path: str) -> str:
+     """Returns either local_path or home_path based on write permissions."""
+@@ -186,7 +186,7 @@ def user_path(*path: str) -> str:
+             os.makedirs(user_path("worlds"), exist_ok=True)
+ 
+     return os.path.join(user_path.cached_path, *path)
+-
++user_path.cached_path = os.environ["HOME"]
+ 
+ def cache_path(*path: str) -> str:
+     """Returns path to a file in the user's Archipelago cache directory."""
+@@ -197,7 +197,7 @@ def cache_path(*path: str) -> str:
+         cache_path.cached_path = platformdirs.user_cache_dir("Archipelago", False)
+ 
+     return os.path.join(cache_path.cached_path, *path)
+-
++cache_path.cached_path = f"{os.environ['HOME']}/.."
+ 
+ def output_path(*path: str) -> str:
+     if hasattr(output_path, 'cached_path'):
